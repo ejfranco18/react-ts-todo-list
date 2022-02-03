@@ -1,46 +1,81 @@
-import React, { useState } from 'react';
+import React, { FC, ChangeEvent, useState } from 'react';
 
-import logo from './logo.svg';
 import './App.css';
+import Task from './Components/Task';
+import { TaskType } from './Interfaces';
 
-function App() {
-  const [count, setCount] = useState(0);
+const App: FC = () => {
+  const [id, setId] = useState<number>(0);
+  const [name, setName] = useState<string>('');
+  const [hours, setHours] = useState<number>(0);
+  const [details, setDetails] = useState<string>('');
+  const [todoList, setTodoList] = useState<TaskType[]>([]);
+
+  const handleName = (event: ChangeEvent<HTMLInputElement>): void => {
+    setName(event.target.value);
+  };
+
+  const handleHours = (event: ChangeEvent<HTMLInputElement>): void => {
+    setHours(Number(event.target.value));
+  };
+
+  const handleDetails = (event: ChangeEvent<HTMLInputElement>): void => {
+    setDetails(event.target.value);
+  };
+
+  const addTask = (): void => {
+    setId(id + 1);
+    const newTask = { id, name, hours, details };
+    setTodoList([...todoList, newTask]);
+    setName('');
+    setHours(0);
+    setDetails('');
+  };
+
+  const deleteTask = (taskId: number): void => {
+    setTodoList(
+      todoList.filter((task) => {
+        return task.id != taskId;
+      })
+    );
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div>
+      <div>
+        <div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={name}
+            onChange={handleName}
+          />
+          <input
+            type="number"
+            name="hours"
+            value={hours}
+            onChange={handleHours}
+          />
+          <input
+            type="text"
+            name="details"
+            placeholder="Details"
+            value={details}
+            onChange={handleDetails}
+          />
+        </div>
+        <button onClick={addTask}>Add Task</button>
+      </div>
+      <div>
+        <ul>
+          {todoList.map((task: TaskType, key: number) => {
+            return <Task key={key} task={task} deleteTask={deleteTask} />;
+          })}
+        </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
