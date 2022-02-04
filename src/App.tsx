@@ -1,7 +1,10 @@
 import React, { FC, ChangeEvent, useState } from 'react';
 
 import './App.css';
+import Button from './Components/Button/Button';
+import Input from './Components/Input/Input';
 import Task from './Components/Task';
+import TextArea from './Components/TextArea/TextArea';
 import { TaskType } from './Interfaces';
 
 const App: FC = () => {
@@ -19,7 +22,7 @@ const App: FC = () => {
     setHours(Number(event.target.value));
   };
 
-  const handleDetails = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleDetails = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setDetails(event.target.value);
   };
 
@@ -44,28 +47,27 @@ const App: FC = () => {
     <div>
       <div>
         <div>
-          <input
+          <Input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder="Task"
             value={name}
             onChange={handleName}
           />
-          <input
+          <Input
             type="number"
             name="hours"
             value={hours}
             onChange={handleHours}
           />
-          <input
-            type="text"
+          <TextArea
             name="details"
             placeholder="Details"
             value={details}
             onChange={handleDetails}
           />
         </div>
-        <button onClick={addTask}>Add Task</button>
+        <Button onClick={addTask} text={'Add task'} />
       </div>
       <div>
         <ul>
