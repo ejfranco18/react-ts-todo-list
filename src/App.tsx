@@ -2,11 +2,11 @@ import React, { FC, ChangeEvent, useState, useMemo } from 'react';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Button from './components/Button/Button';
-import Input from './components/Input/Input';
-import Theme from './components/Styles/theme';
-import Task from './components/Task';
-import TextArea from './components/TextArea/TextArea';
+import Button from './componentss/Button/Button';
+import Input from './componentss/Input/Input';
+import Theme from './componentss/Styles/theme';
+import Task from './componentss/Task';
+import TextArea from './componentss/TextArea/TextArea';
 import { TaskType } from './Interfaces';
 import { addTask, deleteTask, selectTasks } from './state/taskSlice';
 
