@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { TextAreaStyled, InputWrapper } from './TextArea.styled';
+import { InputWrapper } from '../Input/Input.styled';
+import { TextAreaStyled } from './TextArea.styled';
 import { TextAreaStyledProps } from './TextArea.types';
 
 const TextArea: React.FC<TextAreaStyledProps> = ({

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { TaskType } from '../Interfaces';
+import Button from './Button/Button';
 
 interface Props {
   task: TaskType;
@@ -11,17 +12,17 @@ const Task = ({ task, deleteTask }: Props) => {
   return (
     <li>
       <div>
-        <p>Name: {task.name}</p>
+        <p>Name: {task.taskName}</p>
         <p>Hours: {task.hours}</p>
         <p>Details: {task.details}</p>
       </div>
-      <button
+      <Button
         onClick={() => {
           deleteTask(task.id);
         }}
-      >
-        Delete
-      </button>
+        text={'Delete'}
+        disabled={false}
+      />
     </li>
   );
 };
