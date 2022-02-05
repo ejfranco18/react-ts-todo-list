@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useState, useMemo } from 'react';
+import React, { FC, ChangeEvent, useState, useEffect } from 'react';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,7 +8,12 @@ import Theme from './components/Styles/theme';
 import Task from './components/Task';
 import TextArea from './components/TextArea/TextArea';
 import { TaskType } from './Interfaces';
-import { addTask, deleteTask, selectTasks } from './state/taskSlice';
+import {
+  selectTasks,
+  getTasks,
+  addTaskDB,
+  deleteTaskDB,
+} from './state/taskSlice';
 
 const App: FC = () => {
   const [taskName, setTaskName] = useState<string>('');
@@ -16,6 +21,10 @@ const App: FC = () => {
   const [details, setDetails] = useState<string>('');
   const tasksStates = useSelector(selectTasks).tasks;
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTasks());
+  }, [dispatch]);
 
   const handleName = (event: ChangeEvent<HTMLInputElement>): void => {
     setTaskName(event.target.value);
@@ -29,17 +38,10 @@ const App: FC = () => {
     setDetails(event.target.value);
   };
 
-  const currentId = useMemo(() => {
-    if (tasksStates.length) {
-      return tasksStates[tasksStates.length - 1].id;
-    }
-    return 0;
-  }, [tasksStates]);
-
   const handleAddTask = (): void => {
     dispatch(
-      addTask({
-        id: currentId + 1,
+      addTaskDB({
+        id: '',
         taskName,
         hours,
         details,
@@ -51,9 +53,12 @@ const App: FC = () => {
     setDetails('');
   };
 
-  const handleDeleteTask = (taskId: number): void => {
-    console.log('IDDD', taskId);
-    dispatch(deleteTask(taskId));
+  const handleDeleteTask = (taskId: string): void => {
+    dispatch(deleteTaskDB(taskId));
+  };
+
+  const handleCompleteTask = (taskId: string): void => {
+    console.log(taskId);
   };
 
   const disabledButton = !(taskName && hours && details);
@@ -61,6 +66,7 @@ const App: FC = () => {
   return (
     <Theme>
       <main>
+        <h1>TODO LIST</h1>
         <div className="form-wrapper">
           <div>
             <Input
@@ -93,7 +99,12 @@ const App: FC = () => {
           <ul>
             {tasksStates.map((task: TaskType, key: number) => {
               return (
-                <Task key={key} task={task} deleteTask={handleDeleteTask} />
+                <Task
+                  key={key}
+                  task={task}
+                  deleteTask={() => handleDeleteTask(task.id)}
+                  completeTask={() => handleCompleteTask(task.id)}
+                />
               );
             })}
           </ul>

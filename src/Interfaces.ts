@@ -1,5 +1,5 @@
 export interface TaskType {
-  id: number;
+  id: string;
   taskName: string;
   hours: number;
   details: string;

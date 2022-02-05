@@ -12,6 +12,17 @@ main {
   align-items: center;
 }
 
+h1 {
+  color: #fff;
+  font-family: Monospace, cursive;
+  font-size: 65px;
+  font-weight: normal;
+  line-height: 60px;
+  margin: 10px 0 20px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 rgb(119, 119, 119);
+  text-align: center; }
+
 .form-wrapper {
   background: rgba(255,255,255,0.2);
   width: 50%;

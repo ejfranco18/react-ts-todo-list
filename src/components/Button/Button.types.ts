@@ -1,5 +1,5 @@
 export interface ButtonStyledProps {
   text: string;
-  disabled: boolean;
+  disabled?: boolean;
   onClick: () => void;
 }

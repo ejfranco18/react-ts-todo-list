@@ -5,24 +5,20 @@ import Button from './Button/Button';
 
 interface Props {
   task: TaskType;
-  deleteTask(taskId: number): void;
+  deleteTask: () => void;
+  completeTask: () => void;
 }
 
-const Task = ({ task, deleteTask }: Props) => {
+const Task = ({ task, deleteTask, completeTask }: Props) => {
   return (
     <li>
       <div>
         <p>Name: {task.taskName}</p>
         <p>Hours: {task.hours}</p>
         <p>Details: {task.details}</p>
+        {!task.completed && <Button onClick={completeTask} text={'Complete'} />}
       </div>
-      <Button
-        onClick={() => {
-          deleteTask(task.id);
-        }}
-        text={'Delete'}
-        disabled={false}
-      />
+      <Button onClick={deleteTask} text={'Delete'} />
     </li>
   );
 };
