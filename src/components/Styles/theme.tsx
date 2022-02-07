@@ -4,16 +4,19 @@ import { ThemeProvider } from 'styled-components';
 
 const theme = {
   colors: {
-    white: '#FFFDF9',
-    persianGreen: '#06B49A',
-    ming: '#006775',
-    lightMing: '#028585',
-    onyx: '#36313D',
-    orange: '#F46036',
-    platinum: '#EAEAEA',
-    lightGreen: '#7ADFBB',
+    blue: '#32a1ce',
     cambrigeBlue: '#ABC4AB',
+    darkGrey: '#666666',
     grey: '#bbbbbb',
+    lightGreen: '#7ADFBB',
+    lightMing: '#028585',
+    ming: '#006775',
+    onyx: '#36313D',
+    orange: '#ee714f',
+    persianGreen: '#06B49A',
+    platinum: '#EAEAEA',
+    transparentWhite: 'rgba(255, 253, 249, 0.4)',
+    white: '#e6e6e6',
   },
 };
 

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from './components/Button/Button';
 import Input from './components/Input/Input';
 import Theme from './components/Styles/theme';
-import Task from './components/Task';
+import Task from './components/Task/Task';
 import TextArea from './components/TextArea/TextArea';
 import { TaskType } from './Interfaces';
 import {
@@ -13,6 +13,7 @@ import {
   getTasks,
   addTaskDB,
   deleteTaskDB,
+  updateTaskDB,
 } from './state/taskSlice';
 
 const App: FC = () => {
@@ -58,7 +59,7 @@ const App: FC = () => {
   };
 
   const handleCompleteTask = (taskId: string): void => {
-    console.log(taskId);
+    dispatch(updateTaskDB(taskId))
   };
 
   const disabledButton = !(taskName && hours && details);
@@ -68,7 +69,6 @@ const App: FC = () => {
       <main>
         <h1>TODO LIST</h1>
         <div className="form-wrapper">
-          <div>
             <Input
               type="text"
               name="taskName"
@@ -88,15 +88,13 @@ const App: FC = () => {
               value={details}
               onChange={handleDetails}
             />
-          </div>
           <Button
             onClick={handleAddTask}
             text={'Add task'}
             disabled={disabledButton}
           />
         </div>
-        <div className="list-wrapper">
-          <ul>
+          <div className='tasks-container'>
             {tasksStates.map((task: TaskType, key: number) => {
               return (
                 <Task
@@ -107,8 +105,7 @@ const App: FC = () => {
                 />
               );
             })}
-          </ul>
-        </div>
+          </div>
       </main>
     </Theme>
   );

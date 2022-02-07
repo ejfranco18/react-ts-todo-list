@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
 export const TextAreaStyled = styled.textarea`
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: 25px;
+  border: none;
+  color: ${({ theme }) => theme.colors.darkGrey};
+  display: block;
   font-family: Poppins-Medium;
   font-size: 15px;
-  line-height: 1.5;
-  color: #666;
-  display: block;
-  width: 100%;
-  background: #e6e6e6;
   height: 100px;
-  border-radius: 25px;
+  line-height: 1.5;
   padding: 15px 25px;
-  border: none;
+  width: 100%;
 
   &:focus-visible {
-    outline: thick double #32a1ce;
+    outline: thick double ${({ theme }) => theme.colors.blue};
   }
 `;

@@ -4,6 +4,8 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  getDoc,
+  updateDoc,
 } from '@firebase/firestore';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
@@ -23,7 +25,15 @@ const tasksCollectionRef = collection(db, 'tasks');
 
 export const getTasks = createAsyncThunk('getTasks', async () => {
   const data = await getDocs(tasksCollectionRef);
-  const result = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  const result = data.docs.map((doc) => {
+    return { 
+      id: doc.id,
+      taskName: doc.data().taskName,
+      hours: doc.data().hours,
+      details: doc.data().details,
+      completed: doc.data().completed,
+    }
+  });
   return result;
 });
 
@@ -35,9 +45,23 @@ export const addTaskDB = createAsyncThunk(
   }
 );
 
+export const updateTaskDB = createAsyncThunk(
+  'updateTasks',
+  async (id: string) => {
+    console.log('slice update', id)
+    const taskDoc = doc(db, 'tasks', id);
+    const docSnap = await getDoc(taskDoc);
+    const status = !docSnap.data()!.completed
+    const updateFields = { completed: status}
+    await updateDoc(taskDoc, updateFields);
+    return {id, status };
+  }
+);
+
 export const deleteTaskDB = createAsyncThunk(
   'deleteTasks',
   async (id: string) => {
+    console.log('slice delete', id)
     const taskDoc = doc(db, 'tasks', id);
     await deleteDoc(taskDoc);
     return id;
@@ -68,13 +92,16 @@ export const taskSlice = createSlice({
       .addCase(addTaskDB.fulfilled, (state, action) => {
         state.tasks.push(action.payload);
       })
+      .addCase(updateTaskDB.fulfilled, (state, action) => {
+        const task = state.tasks.find((task) => {
+          return task.id === action.payload.id;
+        });
+        task!.completed = action.payload.status;
+      })
       .addCase(deleteTaskDB.fulfilled, (state, action) => {
         state.tasks = state.tasks.filter((task) => {
           return task.id !== action.payload;
         });
-      })
-      .addCase(deleteTaskDB.rejected, (error, action) => {
-        console.log(error, action.payload);
       });
   },
 });

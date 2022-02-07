@@ -1,42 +1,24 @@
 import styled from 'styled-components';
 
 export const InputWrapper = styled.div`
-  width: 90%;
   margin: 20px;
+  width: 90%;
 `;
 
 export const InputStyled = styled.input`
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: 25px;
+  border: none;
+  color: ${({ theme }) => theme.colors.darkGrey};
+  display: block;
   font-family: Poppins-Medium;
   font-size: 15px;
-  line-height: 1.5;
-  color: #666;
-  display: block;
-  width: 100%;
-  background: #e6e6e6;
   height: 50px;
-  border-radius: 25px;
-  padding: 0 25px;
-  border: none;
-
-  &:focus-visible {
-    outline: thick double #32a1ce;
-  }
-`;
-
-export const TextAreaStyled = styled.textarea`
-  font-family: Poppins-Medium;
-  font-size: 15px;
   line-height: 1.5;
-  color: #666;
-  display: block;
+  padding: 0 25px;
   width: 100%;
-  background: #e6e6e6;
-  height: 100px;
-  border-radius: 25px;
-  padding: 15px 25px;
-  border: none;
 
   &:focus-visible {
-    outline: thick double #32a1ce;
+    outline: thick double ${({ theme }) => theme.colors.blue};;
   }
 `;
